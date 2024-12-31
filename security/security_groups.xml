@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data >
+            <!-- Custom Category for Groups -->
+        <record id="module_category_promotion_management" model="ir.module.category">
+            <field name="name">Promotion Management</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Group: Promotion Department -->
+        <record id="group_promotion_department" model="res.groups">
+            <field name="name">Promotion Department</field>
+            <field name="category_id" ref="module_category_promotion_management"/>
+
+        </record>
+
+        <!-- Group: CEO -->
+        <record id="group_ceo" model="res.groups">
+            <field name="name">CEO</field>
+            <field name="category_id" ref="module_category_promotion_management"/>
+            <field name="implied_ids" eval="[(4, ref('group_promotion_department'))]"/>
+
+        </record>
+    </data>
+</odoo>
+

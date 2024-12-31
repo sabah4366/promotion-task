@@ -1,0 +1,68 @@
+<odoo>
+    <!-- Form View -->
+    <record id="view_promotion_announcement_form" model="ir.ui.view">
+        <field name="name">promotion.announcement.form</field>
+        <field name="model">promotion.announcement</field>
+        <field name="arch" type="xml">
+            <form string="Promotion Announcement">
+                <header>
+                    <button string="Submit HR" type="object" name="action_hr_review"  class="btn-primary"  invisible="state != 'draft'" groups="hr.group_hr_manager"/>
+                    <button string="Submit to Promotion Dept" type="object" name="action_promotion_review" invisible="state != 'hr_review'" groups="promotion_increment.group_promotion_department"  class="btn-primary"/>
+                    <button string="Submit to CEO" type="object" name="action_ceo_approval" invisible="state != 'promotion_review'" groups="promotion_increment.group_ceo"   class="btn-primary"/>
+                    <field name="state" widget="statusbar"/>
+
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="announcement_date"/>
+                            <field name="department_id"/>
+                        </group>
+                        <group>
+                             <field name="available_seats"/>
+                             <field name="additional_details"/>
+                        </group>
+                    </group>
+                    <notebook>
+                    <page string="Promotion Requests" groups="hr.group_hr_manager">
+                        <field name="promotion_lines">
+                            <tree editable="bottom">
+                                <field name="employee_id"/>
+                                <field name="current_salary"/>
+                                <field name="proposed_salary"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_promotion_announcement_tree" model="ir.ui.view">
+        <field name="name">promotion.announcement.tree</field>
+        <field name="model">promotion.announcement</field>
+        <field name="arch" type="xml">
+            <tree string="Promotion Announcements">
+                <field name="name"/>
+                <field name="announcement_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_promotion_announcement" model="ir.actions.act_window">
+        <field name="name">Promotion Announcements</field>
+        <field name="res_model">promotion.announcement</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_promotion_announcement" name="Promotion Announcements"
+               action="action_promotion_announcement"
+              groups="hr.group_hr_manager"
+                />
+</odoo>
